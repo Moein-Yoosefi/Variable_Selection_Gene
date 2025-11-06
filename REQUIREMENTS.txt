@@ -1,0 +1,53 @@
+# R Package Requirements for Variable Selection Gene Project
+
+## Core Required Packages
+glmnet          # LASSO and Elastic Net regularization
+randomForest    # Random Forest algorithms
+caret           # Machine learning utilities and cross-validation
+MASS            # Stepwise selection and statistical functions
+ggplot2         # Data visualization
+pheatmap        # Heatmap visualization
+stats           # Statistical functions (base R)
+
+## Optional Packages
+Boruta          # Boruta all-relevant feature selection algorithm
+
+## Bioconductor Packages (Optional)
+# For advanced normalization and imputation
+preprocessCore  # Quantile normalization and preprocessing
+impute          # KNN imputation for missing values
+
+## Installation Instructions
+
+### Install CRAN packages:
+install.packages(c(
+  "glmnet",
+  "randomForest",
+  "caret",
+  "MASS",
+  "ggplot2",
+  "pheatmap",
+  "Boruta"
+))
+
+### Install Bioconductor packages:
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install(c(
+  "preprocessCore",
+  "impute"
+))
+
+## Version Information
+# Tested with:
+# R version: 4.0.0 or higher
+# glmnet: 4.1 or higher
+# randomForest: 4.7 or higher
+# caret: 6.0 or higher
+# ggplot2: 3.3 or higher
+
+## System Requirements
+# Operating System: Linux, macOS, or Windows
+# RAM: 4GB minimum, 8GB+ recommended for large datasets
+# R: Version 4.0.0 or higher

@@ -1,0 +1,35 @@
+# R files
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+
+# Data files (usually too large for git)
+data/*.csv
+data/*.txt
+data/*.rds
+data/*.RData
+
+# Output files
+examples/*.pdf
+examples/*.png
+examples/*.csv
+examples/*.txt
+!examples/example_analysis.R
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.log
+*~
+
+# R package build files
+*.tar.gz
+*.zip
