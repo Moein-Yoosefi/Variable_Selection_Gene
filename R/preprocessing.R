@@ -1,5 +1,4 @@
 # Data Preprocessing Pipeline for Gene Expression Data
-# Author: Gene Analysis Team
 # Description: Functions for preprocessing and quality control of genomic data
 
 library(preprocessCore)  # For normalization (install via Bioconductor if needed)

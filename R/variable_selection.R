@@ -1,5 +1,4 @@
 # Variable Selection Methods for Gene Expression Data
-# Author: Gene Analysis Team
 # Description: Implementations of various variable selection algorithms for genomic data
 
 library(glmnet)      # For LASSO and Elastic Net

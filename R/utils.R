@@ -1,5 +1,4 @@
 # Utility Functions for Gene Variable Selection
-# Author: Gene Analysis Team
 # Description: Helper functions for visualization, evaluation, and reporting
 
 library(ggplot2)
