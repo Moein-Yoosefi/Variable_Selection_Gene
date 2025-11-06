@@ -1,6 +1,3 @@
-# Example Analysis: Variable Selection for Gene Expression Data
-# This script demonstrates the complete workflow for variable selection
-
 # Load required libraries
 library(glmnet)
 library(randomForest)

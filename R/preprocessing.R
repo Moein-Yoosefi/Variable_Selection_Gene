@@ -1,17 +1,6 @@
-# Data Preprocessing Pipeline for Gene Expression Data
-# Description: Functions for preprocessing and quality control of genomic data
-
-library(preprocessCore)  # For normalization (install via Bioconductor if needed)
+library(preprocessCore)
 library(stats)
 
-#' Load Gene Expression Data
-#'
-#' Loads gene expression data from CSV or tab-delimited file
-#'
-#' @param file_path Path to the data file
-#' @param sep Separator (default: ",")
-#' @param header Whether file has header
-#' @return Data frame with gene expression data
 load_gene_data <- function(file_path, sep = ",", header = TRUE) {
   cat(sprintf("Loading data from: %s\n", file_path))
 
@@ -22,14 +11,6 @@ load_gene_data <- function(file_path, sep = ",", header = TRUE) {
   return(data)
 }
 
-
-#' Remove Low Variance Genes
-#'
-#' Filters out genes with variance below a threshold
-#'
-#' @param gene_matrix Matrix of gene expression (samples x genes)
-#' @param var_threshold Minimum variance threshold
-#' @return Filtered gene matrix
 filter_low_variance <- function(gene_matrix, var_threshold = 0.01) {
   cat("Filtering low variance genes...\n")
 
@@ -43,15 +24,6 @@ filter_low_variance <- function(gene_matrix, var_threshold = 0.01) {
   return(gene_matrix[, high_var_genes, drop = FALSE])
 }
 
-
-#' Handle Missing Values
-#'
-#' Imputes or removes missing values from gene expression data
-#'
-#' @param gene_matrix Matrix of gene expression
-#' @param method Method: "remove", "mean", "median", "knn"
-#' @param max_missing Maximum proportion of missing values per gene (for removal)
-#' @return Processed gene matrix
 handle_missing_values <- function(gene_matrix, method = "mean", max_missing = 0.2) {
   cat(sprintf("Handling missing values (method: %s)...\n", method))
 
@@ -101,14 +73,6 @@ handle_missing_values <- function(gene_matrix, method = "mean", max_missing = 0.
   return(gene_matrix)
 }
 
-
-#' Normalize Gene Expression Data
-#'
-#' Applies normalization to gene expression data
-#'
-#' @param gene_matrix Matrix of gene expression (samples x genes)
-#' @param method Normalization method: "zscore", "minmax", "quantile", "log2"
-#' @return Normalized gene matrix
 normalize_genes <- function(gene_matrix, method = "zscore") {
   cat(sprintf("Normalizing gene expression (method: %s)...\n", method))
 
@@ -142,15 +106,6 @@ normalize_genes <- function(gene_matrix, method = "zscore") {
   return(gene_matrix)
 }
 
-
-#' Remove Outlier Samples
-#'
-#' Identifies and removes outlier samples based on distance metrics
-#'
-#' @param gene_matrix Matrix of gene expression (samples x genes)
-#' @param method Method: "pca", "distance"
-#' @param threshold Z-score threshold for outlier detection
-#' @return List with cleaned matrix and outlier indices
 remove_outliers <- function(gene_matrix, method = "pca", threshold = 3) {
   cat(sprintf("Detecting outliers (method: %s, threshold: %.1f)...\n", method, threshold))
 
@@ -189,14 +144,6 @@ remove_outliers <- function(gene_matrix, method = "pca", threshold = 3) {
   return(result)
 }
 
-
-#' Feature Selection by Correlation
-#'
-#' Removes highly correlated features to reduce multicollinearity
-#'
-#' @param gene_matrix Matrix of gene expression (samples x genes)
-#' @param cor_threshold Correlation threshold (default: 0.9)
-#' @return Filtered gene matrix
 remove_correlated_features <- function(gene_matrix, cor_threshold = 0.9) {
   cat(sprintf("Removing highly correlated features (threshold: %.2f)...\n", cor_threshold))
 
@@ -219,22 +166,6 @@ remove_correlated_features <- function(gene_matrix, cor_threshold = 0.9) {
   return(gene_matrix)
 }
 
-
-#' Complete Preprocessing Pipeline
-#'
-#' Runs the full preprocessing pipeline on gene expression data
-#'
-#' @param gene_matrix Matrix of gene expression (samples x genes)
-#' @param normalize Whether to normalize (default: TRUE)
-#' @param norm_method Normalization method
-#' @param filter_variance Whether to filter low variance genes
-#' @param var_threshold Variance threshold
-#' @param handle_na Whether to handle missing values
-#' @param na_method Missing value method
-#' @param remove_outliers_flag Whether to remove outliers
-#' @param remove_corr Whether to remove correlated features
-#' @param cor_threshold Correlation threshold
-#' @return Preprocessed gene matrix
 preprocess_pipeline <- function(gene_matrix,
                                normalize = TRUE,
                                norm_method = "zscore",
@@ -292,16 +223,6 @@ preprocess_pipeline <- function(gene_matrix,
   return(gene_matrix)
 }
 
-
-#' Split Data into Training and Testing Sets
-#'
-#' Splits data into training and testing sets
-#'
-#' @param x Feature matrix
-#' @param y Response variable
-#' @param train_ratio Proportion for training (default: 0.8)
-#' @param seed Random seed for reproducibility
-#' @return List with train and test data
 train_test_split <- function(x, y, train_ratio = 0.8, seed = 123) {
   set.seed(seed)
 
