@@ -1,20 +1,8 @@
-# Variable Selection Methods for Gene Expression Data
-# Description: Implementations of various variable selection algorithms for genomic data
+library(glmnet)
+library(randomForest)
+library(caret)
+library(MASS)
 
-library(glmnet)      # For LASSO and Elastic Net
-library(randomForest) # For Random Forest variable importance
-library(caret)       # For cross-validation and preprocessing
-library(MASS)        # For stepwise selection
-
-#' LASSO Variable Selection
-#'
-#' Performs LASSO regression for variable selection on gene expression data
-#'
-#' @param x Matrix of predictors (genes)
-#' @param y Response variable (e.g., phenotype, disease status)
-#' @param alpha Elastic net mixing parameter (1 for LASSO, 0 for Ridge)
-#' @param nfolds Number of folds for cross-validation
-#' @return List containing selected variables and model
 lasso_selection <- function(x, y, alpha = 1, nfolds = 10) {
   cat("Running LASSO variable selection...\n")
 
@@ -49,16 +37,6 @@ lasso_selection <- function(x, y, alpha = 1, nfolds = 10) {
   return(result)
 }
 
-
-#' Elastic Net Variable Selection
-#'
-#' Performs Elastic Net regression for variable selection
-#'
-#' @param x Matrix of predictors (genes)
-#' @param y Response variable
-#' @param alpha Elastic net mixing parameter (between 0 and 1)
-#' @param nfolds Number of folds for cross-validation
-#' @return List containing selected variables and model
 elastic_net_selection <- function(x, y, alpha = 0.5, nfolds = 10) {
   cat("Running Elastic Net variable selection...\n")
 
@@ -68,17 +46,6 @@ elastic_net_selection <- function(x, y, alpha = 0.5, nfolds = 10) {
   return(result)
 }
 
-
-#' Random Forest Variable Importance
-#'
-#' Uses Random Forest to rank variables by importance
-#'
-#' @param x Matrix or data frame of predictors (genes)
-#' @param y Response variable
-#' @param ntree Number of trees
-#' @param top_n Number of top variables to select (NULL for all)
-#' @param importance_threshold Minimum importance threshold (NULL for top_n selection)
-#' @return List containing variable importance and selected variables
 rf_variable_importance <- function(x, y, ntree = 500, top_n = NULL, importance_threshold = NULL) {
   cat("Running Random Forest variable importance...\n")
 
@@ -124,16 +91,6 @@ rf_variable_importance <- function(x, y, ntree = 500, top_n = NULL, importance_t
   return(result)
 }
 
-
-#' Stepwise Variable Selection
-#'
-#' Performs stepwise (forward, backward, or both) variable selection
-#'
-#' @param x Matrix of predictors (genes)
-#' @param y Response variable
-#' @param direction Direction of selection: "forward", "backward", or "both"
-#' @param max_vars Maximum number of variables to include
-#' @return List containing selected model and variables
 stepwise_selection <- function(x, y, direction = "both", max_vars = NULL) {
   cat(sprintf("Running stepwise variable selection (direction: %s)...\n", direction))
 
@@ -180,16 +137,6 @@ stepwise_selection <- function(x, y, direction = "both", max_vars = NULL) {
   return(result)
 }
 
-
-#' Boruta Variable Selection
-#'
-#' Uses Boruta algorithm for all-relevant variable selection
-#' Requires the Boruta package
-#'
-#' @param x Matrix or data frame of predictors (genes)
-#' @param y Response variable
-#' @param maxRuns Maximum number of Boruta iterations
-#' @return List containing selected variables and Boruta object
 boruta_selection <- function(x, y, maxRuns = 100) {
   if (!requireNamespace("Boruta", quietly = TRUE)) {
     stop("Package 'Boruta' is required. Install with: install.packages('Boruta')")
@@ -220,15 +167,6 @@ boruta_selection <- function(x, y, maxRuns = 100) {
   return(result)
 }
 
-
-#' Compare Multiple Variable Selection Methods
-#'
-#' Runs multiple variable selection methods and compares results
-#'
-#' @param x Matrix of predictors (genes)
-#' @param y Response variable
-#' @param methods Vector of methods to use
-#' @return List of results from each method
 compare_methods <- function(x, y, methods = c("lasso", "elasticnet", "rf", "stepwise")) {
   cat("Comparing variable selection methods...\n\n")
 

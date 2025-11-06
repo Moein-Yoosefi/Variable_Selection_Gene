@@ -1,17 +1,6 @@
-# Utility Functions for Gene Variable Selection
-# Description: Helper functions for visualization, evaluation, and reporting
-
 library(ggplot2)
 library(pheatmap)
 
-#' Plot Variable Importance
-#'
-#' Creates a bar plot of variable importance scores
-#'
-#' @param importance_df Data frame with 'variable' and 'importance' columns
-#' @param top_n Number of top variables to plot
-#' @param title Plot title
-#' @return ggplot object
 plot_variable_importance <- function(importance_df, top_n = 20, title = "Variable Importance") {
   # Select top N variables
   top_vars <- head(importance_df, top_n)
@@ -29,13 +18,6 @@ plot_variable_importance <- function(importance_df, top_n = 20, title = "Variabl
   return(p)
 }
 
-
-#' Plot LASSO Path
-#'
-#' Plots the LASSO regularization path
-#'
-#' @param lasso_result Result object from lasso_selection
-#' @return Plot of coefficient paths
 plot_lasso_path <- function(lasso_result) {
   cv_fit <- lasso_result$cv_fit
 
@@ -52,16 +34,6 @@ plot_lasso_path <- function(lasso_result) {
   par(mfrow = c(1, 1))
 }
 
-
-#' Plot Heatmap of Selected Genes
-#'
-#' Creates a heatmap of expression values for selected genes
-#'
-#' @param gene_matrix Matrix of gene expression
-#' @param selected_genes Vector of selected gene names
-#' @param annotation_col Optional data frame for column annotations
-#' @param title Plot title
-#' @return Heatmap plot
 plot_gene_heatmap <- function(gene_matrix, selected_genes, annotation_col = NULL,
                               title = "Selected Gene Expression") {
 
@@ -83,14 +55,6 @@ plot_gene_heatmap <- function(gene_matrix, selected_genes, annotation_col = NULL
            fontsize_col = 8)
 }
 
-
-#' Calculate Model Performance
-#'
-#' Evaluates model performance on test data
-#'
-#' @param y_true True response values
-#' @param y_pred Predicted values
-#' @return List of performance metrics
 calculate_performance <- function(y_true, y_pred) {
   # Remove NA values
   valid_idx <- !is.na(y_true) & !is.na(y_pred)
@@ -122,13 +86,6 @@ calculate_performance <- function(y_true, y_pred) {
   return(metrics)
 }
 
-
-#' Print Performance Metrics
-#'
-#' Prints performance metrics in a formatted way
-#'
-#' @param metrics List of metrics from calculate_performance
-#' @param method_name Name of the method (optional)
 print_performance <- function(metrics, method_name = NULL) {
   if (!is.null(method_name)) {
     cat(sprintf("=== Performance Metrics: %s ===\n", method_name))
@@ -144,18 +101,6 @@ print_performance <- function(metrics, method_name = NULL) {
   cat("\n")
 }
 
-
-#' Validate Selected Variables
-#'
-#' Performs cross-validation to validate selected variables
-#'
-#' @param x_train Training features
-#' @param y_train Training response
-#' @param x_test Testing features
-#' @param y_test Testing response
-#' @param selected_vars Vector of selected variable names
-#' @param method Model type: "lm", "glmnet", "rf"
-#' @return List with performance metrics
 validate_selection <- function(x_train, y_train, x_test, y_test,
                                selected_vars, method = "lm") {
 
@@ -198,17 +143,6 @@ validate_selection <- function(x_train, y_train, x_test, y_test,
   return(result)
 }
 
-
-#' Compare Method Performance
-#'
-#' Compares performance of multiple variable selection methods
-#'
-#' @param comparison_results List of results from compare_methods
-#' @param x_train Training features
-#' @param y_train Training response
-#' @param x_test Testing features
-#' @param y_test Testing response
-#' @return Data frame with comparison results
 compare_performance <- function(comparison_results, x_train, y_train, x_test, y_test) {
   cat("=== Comparing Method Performance ===\n\n")
 
@@ -259,14 +193,6 @@ compare_performance <- function(comparison_results, x_train, y_train, x_test, y_
   return(performance_df)
 }
 
-
-#' Export Selected Variables
-#'
-#' Exports selected variables to a file
-#'
-#' @param selected_vars Vector of selected variable names
-#' @param output_file Output file path
-#' @param method_name Name of the selection method
 export_selected_vars <- function(selected_vars, output_file, method_name = NULL) {
   cat(sprintf("Exporting %d selected variables to %s\n", length(selected_vars), output_file))
 
@@ -287,14 +213,6 @@ export_selected_vars <- function(selected_vars, output_file, method_name = NULL)
   cat("Export complete\n")
 }
 
-
-#' Generate Summary Report
-#'
-#' Generates a summary report of variable selection results
-#'
-#' @param results Variable selection results
-#' @param method_name Method name
-#' @param output_file Optional output file path
 generate_report <- function(results, method_name, output_file = NULL) {
   report <- c()
   report <- c(report, paste0("=== Variable Selection Report: ", method_name, " ===\n"))
@@ -335,13 +253,6 @@ generate_report <- function(results, method_name, output_file = NULL) {
   invisible(report)
 }
 
-
-#' Create Gene Set Enrichment Input
-#'
-#' Creates input file for gene set enrichment analysis
-#'
-#' @param selected_genes Vector of selected gene names
-#' @param output_file Output file path
 create_enrichment_input <- function(selected_genes, output_file) {
   cat(sprintf("Creating gene set enrichment input with %d genes\n", length(selected_genes)))
 
